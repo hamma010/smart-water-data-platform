@@ -1,0 +1,14 @@
+name: smart_water_dbt
+version: "1.0.0"
+
+profile: smart_water_dbt
+
+model-paths: ["models"]
+
+models:
+  smart_water_dbt:
+    staging:
+      +materialized: view
+
+    marts:
+      +materialized: table

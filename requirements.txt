@@ -1,0 +1,5 @@
+pandas 
+pydantic
+pytest
+python-dotenv
+pydantic-settings

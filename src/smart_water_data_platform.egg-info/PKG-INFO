@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: smart-water-data-platform
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: <3.12,>=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=3.0.6
+Requires-Dist: psycopg2-binary>=2.9.13
+Requires-Dist: pyarrow>=25.0.1
+Requires-Dist: pydantic-settings>=2.15.0
+Requires-Dist: pyspark>=4.2.0

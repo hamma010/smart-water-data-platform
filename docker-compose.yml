@@ -1,0 +1,49 @@
+
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: smart-water-postgres
+    environment:
+      POSTGRES_DB: smart_water
+      POSTGRES_USER: water_user
+      POSTGRES_PASSWORD: change_me
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U water_user -d smart_water"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  airflow:
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    container_name: smart-water-airflow
+    command: standalone
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: smart_water
+      POSTGRES_USER: water_user
+      POSTGRES_PASSWORD: change_me
+      DBT_PROFILES_DIR: /opt/airflow/project/airflow/dbt_profiles
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./:/opt/airflow/project
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

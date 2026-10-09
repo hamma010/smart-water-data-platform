@@ -1,0 +1,6 @@
+﻿station_id,station_name,city,region,pump_count
+ST001,Station Tunis Nord,Tunis,Tunis,3
+ST002,Station Ariana,Ariana,Tunis,2
+ST003,Station Ben Arous,Ben Arous,Tunis,3
+ST004,Station Sousse,Sousse,Sousse,4
+ST005,Station Sfax,Sfax,Sfax,3

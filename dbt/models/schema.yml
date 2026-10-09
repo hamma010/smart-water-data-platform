@@ -1,0 +1,62 @@
+version: 2
+
+models:
+
+  - name: stg_station_energy_analysis
+    description: "Cleaned and prepared station energy readings."
+
+    columns:
+
+      - name: station_id
+        description: "Unique identifier of the pumping station."
+        data_tests:
+          - not_null
+
+      - name: timestamp
+        description: "Timestamp of the sensor reading."
+        data_tests:
+          - not_null
+
+      - name: date
+        description: "Date of the sensor reading."
+        data_tests:
+          - not_null
+
+      - name: energy_kwh
+        description: "Energy consumption in kWh."
+        data_tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: pump_status
+        description: "Pump operational status."
+        data_tests:
+          - not_null
+
+
+  - name: station_energy_summary
+    description: "Aggregated energy KPIs by pumping station."
+
+    columns:
+
+      - name: station_id
+        description: "Pumping station identifier."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: reading_count
+        description: "Number of sensor readings for the station."
+        data_tests:
+          - not_null
+
+      - name: total_energy_kwh
+        description: "Total energy consumption."
+        data_tests:
+          - not_null
+
+      - name: avg_energy_kwh
+        description: "Average energy consumption."
+        data_tests:
+          - not_null
